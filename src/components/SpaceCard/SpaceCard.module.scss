@@ -1,0 +1,88 @@
+@import "../../scss/variables";
+
+.card {
+  border: 1px solid $gray_color;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 1.5rem;
+
+  .cardDetails {
+    text-align: center;
+
+    .lunch {
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      span:first-child {
+        color: $gray_600;
+      }
+
+      span:last-child {
+        color: $gray_800;
+      }
+    }
+
+    .missionName {
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.8rem;
+      color: $gray_900;
+      margin-bottom: 0.25rem;
+    }
+
+    .rocketName {
+      color: $gray_700;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.3125rem;
+      margin-bottom: 2rem;
+    }
+
+    .lunchStatus {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      h6 {
+        color: $gray_600;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.2rem;
+      }
+
+      button {
+        font-size: 0.75rem;
+        padding: 0.2625rem 0.4875rem;
+        text-align: center;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 0.75rem;
+        color: #fff;
+        border-radius: 0.25rem;
+      }
+      .button_success{
+        background-color: $success_color;
+        border: 1px solid $success_color;
+      }
+      .button_danger{
+        background-color: $danger_color;
+        border: 1px solid $danger_color;
+      }
+    }
+  }
+}
