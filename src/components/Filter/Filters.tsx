@@ -4,16 +4,16 @@ const Filters = () => {
     return (
         <div className={`row ${styles.filterMainDiv}`}>
             
-            <div className="col-md-12 d-flex justify-content-end mb-3">
+            <div className="col-md-12 d-flex justify-content-md-end mb-3">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
-                        <label className="form-check-label" htmlFor="flexCheckChecked">
+                    <input className={`form-check-input ${styles.checkbox_border_color}`} type="checkbox" value="" id="flexCheckChecked" />
+                        <label className={`form-check-label ${styles.upcoming}`} htmlFor="flexCheckChecked">
                             Show upcoming only
                         </label>
                 </div>
             </div>
             
-            <div className="col-md-4">
+            <div className="col-md-5 col-lg-4">
                 <div className="input-group">
                     <input type="text" className="form-control" placeholder="Search..." aria-label="Username"
                            aria-describedby="basic-addon1"/>
@@ -23,7 +23,7 @@ const Filters = () => {
                 </div>
             </div>
 
-            <div className="col-md-6 offset-md-2 d-flex justify-content-between">
+            <div className="col-md-3 offset-md-1 offset-lg-2 offset-sm-0 col-12 my-3 my-md-0">
                 <select
                     className={`form-select ${styles.filter_select}`}
                     aria-label="Default select example">
@@ -31,7 +31,9 @@ const Filters = () => {
                     <option value="1">Failure</option>
                     <option value="2">Success</option>
                 </select>
+            </div>
 
+            <div className="col-md-3 col-12 ">
                 <select className={`form-select ${styles.filter_select}`} aria-label="Default select example">
                     <option selected>By Launch Date</option>
                     <option value="1">Last Week</option>
@@ -39,6 +41,7 @@ const Filters = () => {
                     <option value="3">Last Year</option>
                 </select>
             </div>
+
         </div>
     );
 };

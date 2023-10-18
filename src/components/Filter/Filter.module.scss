@@ -1,7 +1,21 @@
+@import "../../scss/variables";
+
 .filterMainDiv {
   margin-bottom: 4rem;
+
+  .upcoming {
+    color: $text_primary_color;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem;
+  }
+
+  .checkbox_border_color{
+    border-color: $checkbox_border_color;
+  }
+
   .filter_select {
-    width: 256px;
     height: 38px;
   }
 }
