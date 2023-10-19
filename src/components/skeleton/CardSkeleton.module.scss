@@ -1,0 +1,103 @@
+@import "../../scss/variables";
+
+.card {
+  border: 1px solid $gray_color;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 1.5rem;
+
+  .image {
+    max-height: 200px;
+    background: #e2e2e2;
+    max-width: 100%;
+    height: 350px;
+    width: 350px;
+  }
+
+  .loading {
+    position: relative;
+    background: #e2e2e2;
+    animation: pulse 1s linear infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% {
+      background-color: hsl(0, 0%, 95%);
+    }
+    100% {
+      background-color: hsl(0, 0%, 91%);
+    }
+  }
+
+  .cardDetails {
+    text-align: center;
+
+    .lunch {
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      width: 11.73rem;
+      height: 2rem;
+    }
+
+    .missionName {
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.8rem;
+      margin-bottom: 0.25rem;
+      width: 11.73rem;
+      height: 1.8rem;
+    }
+
+    .rocketName {
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.3125rem;
+      margin-bottom: 2rem;
+      width: 11.73rem;
+      height: 1.3125rem;
+    }
+
+    .lunchStatus {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      h6 {
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.2rem;
+        width: 7.8rem;
+        height: 1.2rem;
+      }
+
+      button {
+        font-size: 0.75rem;
+        padding: 0.2625rem 0.4875rem;
+        text-align: center;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 0.75rem;
+        color: #fff;
+        border-radius: 0.25rem;
+        border: #e2e2e2;
+        width: 3rem;
+        height: 1.4rem;
+      }
+    }
+  }
+}

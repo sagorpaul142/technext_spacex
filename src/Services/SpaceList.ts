@@ -11,3 +11,13 @@ export interface Space {
         mission_patch: string;
     }
 }
+
+export interface SpaceXLaunchesContextType {
+    launches: Space[];
+    limit: number;
+    total: number;
+    setLimit: (newLimit: number) => void;
+    setLaunches: (newLaunches: Space[]) => void;
+    loading:boolean;
+    setLoading: (loading: boolean) => void;
+}

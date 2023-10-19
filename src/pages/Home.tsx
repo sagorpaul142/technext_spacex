@@ -4,10 +4,13 @@ import Filters from "../components/Filter/Filters.tsx";
 import SpaceCard from "../components/SpaceCard/SpaceCard.tsx";
 import Footer from "../components/Footer/Footer.tsx";
 import {SpaceXLaunchesContext} from "../context/SpaceXLaunchesContext.tsx";
+import CardSkeleton from "../components/skeleton/CardSkeleton.tsx";
+import {SpaceXLaunchesContextType} from "../Services/SpaceList.ts";
 
 
 const Home = () => {
-    const {launches } = useContext(SpaceXLaunchesContext)
+    const {launches, limit, loading} = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
+
 
     return (
         <>
@@ -15,6 +18,20 @@ const Home = () => {
                 <Header/>
 
                 <Filters/>
+
+                {
+                    loading && launches.length === 0 && (
+                        <div className="row">
+                            {
+                                Array.from(Array(limit)).map((index) => (
+                                    <div className="col-lg-4 col-md-6" key={index}>
+                                        <CardSkeleton/>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    )
+                }
 
                 <div className="row">
                     {
@@ -24,7 +41,6 @@ const Home = () => {
                             </div>
                         ))
                     }
-
                 </div>
 
                 <Footer/>

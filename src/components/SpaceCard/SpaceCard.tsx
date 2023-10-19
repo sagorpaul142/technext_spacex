@@ -3,11 +3,11 @@ import styles from "./SpaceCard.module.scss"
 import moment from "moment";
 import {Space} from "../../Services/SpaceList.ts";
 
-interface SpaceCardProps {
+interface SpaceProps {
   space: Space;
 }
 
-const SpaceCard: React.FC<SpaceCardProps> = ({space}) => {
+const SpaceCard: React.FC<SpaceProps> = ({space}) => {
     return (
         <div className={styles.card}>
             <img src={space?.links?.mission_patch} alt="SpaceImage" className="img-fluid"/>
