@@ -26,16 +26,22 @@ const Filters = () => {
             <div className="col-md-3 offset-md-1 offset-lg-2 offset-sm-0 col-12 my-3 my-md-0">
                 <select
                     className={`form-select ${styles.filter_select}`}
-                    aria-label="Default select example">
-                    <option selected>By Launch Status</option>
+                    aria-label="Default select example"
+                    defaultValue={'DEFAULT'}
+                >
+                    <option value={'DEFAULT'} selected>By Launch Status</option>
                     <option value="1">Failure</option>
                     <option value="2">Success</option>
                 </select>
             </div>
 
             <div className="col-md-3 col-12 ">
-                <select className={`form-select ${styles.filter_select}`} aria-label="Default select example">
-                    <option selected>By Launch Date</option>
+                <select
+                    className={`form-select ${styles.filter_select}`}
+                    aria-label="Default select example"
+                    defaultValue={'DEFAULT'}
+                >
+                    <option value={'DEFAULT'} selected>By Launch Date</option>
                     <option value="1">Last Week</option>
                     <option value="2">Last Month</option>
                     <option value="3">Last Year</option>
