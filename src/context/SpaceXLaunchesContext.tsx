@@ -19,7 +19,6 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
         const newOffset = (page - 1) * limit;
         const queryString = `limit=${limit}&offset=${newOffset}`;
         let url = `https://api.spacexdata.com/v3/launches`;
-        console.log(newOffset, queryString)
 
         if (apiUrl !== '' && apiUrl !== '/upcoming') {
             url += `${apiUrl}&${queryString}`
@@ -52,8 +51,6 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
             localStorage.setItem('page', page.toString());
         }
     }, [page]);
-
-    console.log(launches)
 
     return (
         <SpaceXLaunchesContext.Provider

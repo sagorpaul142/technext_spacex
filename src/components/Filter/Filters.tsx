@@ -9,7 +9,6 @@ const Filters = () => {
     const [selectedOption, setSelectedOption] = useState('');
     const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(typeof event.target.value)
         setSelectedOption(event.target.value);
         if (event.target.value !== '') {
             setApiUrl(`?launch_success=${event.target.value}`)

@@ -16,6 +16,7 @@ const Home = () => {
     return (
         <>
             <div className="container">
+
                 <Header/>
 
                 <Filters/>
@@ -36,8 +37,8 @@ const Home = () => {
 
                 <div className="row">
                     {
-                        launches.map(space => (
-                            <div className="col-lg-4 col-md-6" key={space?.flight_number}>
+                        launches.map((space, index) => (
+                            <div className="col-lg-4 col-md-6" key={index}>
                                 <SpaceCard space={space}/>
                             </div>
                         ))
