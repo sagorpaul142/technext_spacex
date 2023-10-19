@@ -7,12 +7,16 @@ export const SpaceXLaunchesContext = createContext<SpaceXLaunchesContextType | u
 export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
     const [launches, setLaunches] = useState<Space[]>([]);
     const [limit, setLimit] = useState<number>(9);
+    const [page, setPage] = useState<number>(parseInt(localStorage.getItem('page')) || 1);
+    const [offset, setOffset] = useState<number>(page * limit - 9);
     const [total, setTotal] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
 
     const getAllSpaces = () => {
         setLoading(true)
-        axios.get<Space[]>(`https://api.spacexdata.com/v3/launches?limit=${limit}`)
+        const newOffset = (page - 1) * limit
+        const url = `?limit=${limit}&offset=${newOffset}`
+        axios.get<Space[]>(`https://api.spacexdata.com/v3/launches${url}`)
             .then(res => {
                 setLaunches(res?.data)
                 setTotal(parseInt(res.headers['spacex-api-count']))
@@ -25,11 +29,31 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
 
     useEffect(() => {
         getAllSpaces()
-    }, [])
-    console.log(launches)
+    }, [page, offset])
+
+    useEffect(() => {
+        if (!localStorage.getItem('page')) {
+            localStorage.setItem('page', page.toString());
+        }
+    }, [page]);
+
+    // console.log(launches)
 
     return (
-        <SpaceXLaunchesContext.Provider value={{launches, limit, total, setLimit, setLaunches, loading, setLoading}}>
+        <SpaceXLaunchesContext.Provider
+            value={{
+                launches,
+                limit,
+                total,
+                setLimit,
+                setLaunches,
+                loading,
+                setLoading,
+                setOffset,
+                offset,
+                page,
+                setPage
+            }}>
             {children}
         </SpaceXLaunchesContext.Provider>
     );

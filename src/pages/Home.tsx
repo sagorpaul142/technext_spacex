@@ -6,6 +6,7 @@ import Footer from "../components/Footer/Footer.tsx";
 import {SpaceXLaunchesContext} from "../context/SpaceXLaunchesContext.tsx";
 import CardSkeleton from "../components/skeleton/CardSkeleton.tsx";
 import {SpaceXLaunchesContextType} from "../Services/SpaceList.ts";
+import Pagination from "../components/Pagination/Pagination.tsx";
 
 
 const Home = () => {
@@ -42,6 +43,8 @@ const Home = () => {
                         ))
                     }
                 </div>
+
+                <Pagination/>
 
                 <Footer/>
 

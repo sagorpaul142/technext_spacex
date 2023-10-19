@@ -15,8 +15,12 @@ export interface Space {
 export interface SpaceXLaunchesContextType {
     launches: Space[];
     limit: number;
+    offset:number;
+    page:number;
     total: number;
     setLimit: (newLimit: number) => void;
+    setOffset: (newOffset: number) => void;
+    setPage: (newPage: number) => void;
     setLaunches: (newLaunches: Space[]) => void;
     loading:boolean;
     setLoading: (loading: boolean) => void;
