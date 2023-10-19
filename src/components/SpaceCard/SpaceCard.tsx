@@ -10,7 +10,7 @@ interface SpaceProps {
 const SpaceCard: React.FC<SpaceProps> = ({space}) => {
     return (
         <div className={styles.card}>
-            <img src={space?.links?.mission_patch} alt="SpaceImage" className="img-fluid"/>
+            <img loading="lazy" src={space?.links?.mission_patch} alt="SpaceImage" className="img-fluid"/>
             <div className={styles.cardDetails}>
                 <div className={styles.lunch}>
                     <span>Launch Date:</span>

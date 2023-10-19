@@ -1,18 +1,55 @@
 import searchIcon from "../../assets/search_icon.png";
 import styles from "./Filter.module.scss"
+import React, {useContext, useEffect, useState} from "react";
+import {SpaceXLaunchesContext} from "../../context/SpaceXLaunchesContext.tsx";
+import {SpaceXLaunchesContextType} from "../../Services/SpaceList.ts";
+
 const Filters = () => {
+    const {setApiUrl, page, setPage} = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
+    const [selectedOption, setSelectedOption] = useState('');
+    const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
+    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(typeof event.target.value)
+        setSelectedOption(event.target.value);
+        if (event.target.value !== '') {
+            setApiUrl(`?launch_success=${event.target.value}`)
+            setPage(1)
+            localStorage.setItem('page', page.toString());
+        } else {
+            setApiUrl('')
+            setSelectedOption('');
+        }
+    };
+
+    useEffect(() => {
+        if (showUpcomingOnly) {
+            setApiUrl("/upcoming")
+            setPage(1)
+            localStorage.setItem('page', page.toString());
+            setSelectedOption('')
+        } else {
+            setApiUrl('')
+        }
+    }, [showUpcomingOnly])
+
     return (
         <div className={`row ${styles.filterMainDiv}`}>
-            
+
             <div className="col-md-12 d-flex justify-content-md-end mb-3">
                 <div className="form-check">
-                    <input className={`form-check-input ${styles.checkbox_border_color}`} type="checkbox" value="" id="flexCheckChecked" />
-                        <label className={`form-check-label ${styles.upcoming}`} htmlFor="flexCheckChecked">
-                            Show upcoming only
-                        </label>
+                    <input
+                        className={`form-check-input ${styles.checkbox_border_color}`}
+                        id="flexCheckChecked"
+                        type="checkbox"
+                        value=""
+                        onChange={() => setShowUpcomingOnly(!showUpcomingOnly)}
+                    />
+                    <label className={`form-check-label ${styles.upcoming}`} htmlFor="flexCheckChecked">
+                        Show upcoming only
+                    </label>
                 </div>
             </div>
-            
+
             <div className="col-md-5 col-lg-4">
                 <div className="input-group">
                     <input type="text" className="form-control" placeholder="Search..." aria-label="Username"
@@ -27,11 +64,12 @@ const Filters = () => {
                 <select
                     className={`form-select ${styles.filter_select}`}
                     aria-label="Default select example"
-                    defaultValue={'DEFAULT'}
+                    value={selectedOption}
+                    onChange={handleSelectChange}
                 >
-                    <option value={'DEFAULT'} selected>By Launch Status</option>
-                    <option value="1">Failure</option>
-                    <option value="2">Success</option>
+                    <option value=''>By Launch Status</option>
+                    <option value='false'>Failure</option>
+                    <option value='true'>Success</option>
                 </select>
             </div>
 
@@ -39,12 +77,11 @@ const Filters = () => {
                 <select
                     className={`form-select ${styles.filter_select}`}
                     aria-label="Default select example"
-                    defaultValue={'DEFAULT'}
                 >
-                    <option value={'DEFAULT'} selected>By Launch Date</option>
-                    <option value="1">Last Week</option>
-                    <option value="2">Last Month</option>
-                    <option value="3">Last Year</option>
+                    <option value=''>By Launch Date</option>
+                    <option value="">Last Week</option>
+                    <option value="">Last Month</option>
+                    <option value="">Last Year</option>
                 </select>
             </div>
 

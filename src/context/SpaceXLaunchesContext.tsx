@@ -11,25 +11,41 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
     const [offset, setOffset] = useState<number>(page * limit - 9);
     const [total, setTotal] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
+    const [apiUrl, setApiUrl] = useState<string>('');
 
     const getAllSpaces = () => {
         setLoading(true)
-        const newOffset = (page - 1) * limit
-        const url = `?limit=${limit}&offset=${newOffset}`
-        axios.get<Space[]>(`https://api.spacexdata.com/v3/launches${url}`)
+
+        const newOffset = (page - 1) * limit;
+        const queryString = `limit=${limit}&offset=${newOffset}`;
+        let url = `https://api.spacexdata.com/v3/launches`;
+        console.log(newOffset, queryString)
+
+        if (apiUrl !== '' && apiUrl !== '/upcoming') {
+            url += `${apiUrl}&${queryString}`
+        } else if (apiUrl !== '') {
+            url += `${apiUrl}`
+            setPage(1)
+            localStorage.setItem('page', page.toString());
+        } else {
+            url += `?${queryString}`
+        }
+
+        axios.get<Space[]>(url)
             .then(res => {
                 setLaunches(res?.data)
                 setTotal(parseInt(res.headers['spacex-api-count']))
                 setLoading(false)
             }).catch(err => {
             console.log(err)
+            setLaunches([])
             setLoading(false)
         })
     }
 
     useEffect(() => {
         getAllSpaces()
-    }, [page, offset])
+    }, [page, offset, apiUrl])
 
     useEffect(() => {
         if (!localStorage.getItem('page')) {
@@ -37,7 +53,7 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
         }
     }, [page]);
 
-    // console.log(launches)
+    console.log(launches)
 
     return (
         <SpaceXLaunchesContext.Provider
@@ -52,7 +68,9 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                 setOffset,
                 offset,
                 page,
-                setPage
+                setPage,
+                apiUrl,
+                setApiUrl
             }}>
             {children}
         </SpaceXLaunchesContext.Provider>

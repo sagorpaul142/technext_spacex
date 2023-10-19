@@ -21,10 +21,10 @@ const Home = () => {
                 <Filters/>
 
                 {
-                    loading && launches.length === 0 && (
+                    (loading && launches?.length === 0 )&& (
                         <div className="row">
                             {
-                                Array.from(Array(limit)).map((index) => (
+                                Array.from(Array(limit)).map((_,index) => (
                                     <div className="col-lg-4 col-md-6" key={index}>
                                         <CardSkeleton/>
                                     </div>

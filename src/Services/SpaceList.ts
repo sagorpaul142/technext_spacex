@@ -24,4 +24,6 @@ export interface SpaceXLaunchesContextType {
     setLaunches: (newLaunches: Space[]) => void;
     loading:boolean;
     setLoading: (loading: boolean) => void;
+    apiUrl:string;
+    setApiUrl:(newApiUrl:string) => void;
 }
