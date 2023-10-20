@@ -14,6 +14,7 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
     const [filterLaunchStatus, setFilterLaunchStatus] = useState<string>('');
     const [upcoming, setUpcoming] = useState<string>('');
     const [searchName, setSearchName] = useState<string>('');
+    const [filterLaunchDate, setFilterLaunchDate] = useState<string>('');
 
 
     useEffect(() => {
@@ -50,8 +51,47 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
 
             axios.get<Space[]>(url)
                 .then(res => {
-                    setLaunches(res?.data)
-                    setTotal(parseInt(res.headers['spacex-api-count']))
+
+                    const now = new Date();
+                    const startDate = new Date();
+
+                    if (filterLaunchDate === 'last_week') {
+                        startDate.setDate(now.getDate() - 7);
+                        let filteredLaunches: Space[];
+                        // eslint-disable-next-line prefer-const
+                        filteredLaunches = launches.filter((launch) => {
+                            const launchDate = new Date(launch.launch_date_utc);
+                            return launchDate >= startDate && launchDate <= now;
+                        });
+                        console.log(filteredLaunches)
+                        setLaunches(filteredLaunches)
+                        setTotal(filteredLaunches.length)
+                    } else if (filterLaunchDate === 'last_month') {
+                        startDate.setMonth(now.getMonth() - 1);
+                        let filteredLaunches: Space[];
+                        // eslint-disable-next-line prefer-const
+                        filteredLaunches = launches.filter((launch) => {
+                            const launchDate = new Date(launch.launch_date_utc);
+                            return launchDate >= startDate && launchDate <= now;
+                        });
+                        console.log(filteredLaunches)
+                        setLaunches(filteredLaunches)
+                        setTotal(filteredLaunches.length)
+                    } else if (filterLaunchDate === 'last_year') {
+                        startDate.setFullYear(now.getFullYear() - 1);
+                        let filteredLaunches: Space[];
+                        // eslint-disable-next-line prefer-const
+                        filteredLaunches = launches.filter((launch) => {
+                            const launchDate = new Date(launch.launch_date_utc);
+                            return launchDate >= startDate && launchDate <= now;
+                        });
+                        console.log(filteredLaunches)
+                        setLaunches(filteredLaunches)
+                        setTotal(filteredLaunches.length)
+                    } else {
+                        setLaunches(res?.data)
+                        setTotal(parseInt(res.headers['spacex-api-count']))
+                    }
                     setLoading(false)
                 }).catch(err => {
                 console.log(err)
@@ -61,7 +101,7 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
         }
 
         getAllSpaces()
-    }, [page, offset, filterLaunchStatus, searchName, limit, upcoming, setUpcoming])
+    }, [page, offset, filterLaunchStatus, searchName, limit, upcoming, setUpcoming, filterLaunchDate, setFilterLaunchDate])
 
     useEffect(() => {
         if (!localStorage.getItem('page')) {
@@ -88,7 +128,9 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                 searchName,
                 setSearchName,
                 upcoming,
-                setUpcoming
+                setUpcoming,
+                filterLaunchDate,
+                setFilterLaunchDate
             }}>
             {children}
         </SpaceXLaunchesContext.Provider>

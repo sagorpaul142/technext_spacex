@@ -10,11 +10,13 @@ const Filters = () => {
         setUpcoming,
         page,
         setPage,
-        setSearchName
+        setSearchName,
+        setFilterLaunchDate
     } = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
     const [selectedOption, setSelectedOption] = useState('');
     const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
     const [searchByName, setSearchByName] = useState<string>('');
+    const [filter, setFilter] = useState<string>('');
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(event.target.value);
         if (event.target.value !== '') {
@@ -22,6 +24,8 @@ const Filters = () => {
             setPage(1)
             localStorage.setItem('page', page.toString());
             setShowUpcomingOnly(false)
+            setFilter('')
+            setFilterLaunchDate('')
             // setSearchByName('')
             // setSearchName('')
         } else {
@@ -48,6 +52,8 @@ const Filters = () => {
             setSelectedOption('')
             setSearchName('')
             setSearchByName('')
+            setFilter('')
+            setFilterLaunchDate('')
         } else {
             setUpcoming('')
             setSearchName('')
@@ -126,11 +132,16 @@ const Filters = () => {
                 <select
                     className={`form-select ${styles.filter_select}`}
                     aria-label="Default select example"
+                    onChange={(e) => {
+                        setFilter(e.target.value)
+                        setFilterLaunchDate(e.target.value)
+                    }}
+                    value={filter}
                 >
                     <option value=''>By Launch Date</option>
-                    <option value="">Last Week</option>
-                    <option value="">Last Month</option>
-                    <option value="">Last Year</option>
+                    <option value="last_week">Last Week</option>
+                    <option value="last_month">Last Month</option>
+                    <option value="last_year">Last Year</option>
                 </select>
             </div>
 

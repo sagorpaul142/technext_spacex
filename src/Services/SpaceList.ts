@@ -15,19 +15,21 @@ export interface Space {
 export interface SpaceXLaunchesContextType {
     launches: Space[];
     limit: number;
-    offset:number;
-    page:number;
+    offset: number;
+    page: number;
     total: number;
     setLimit: (newLimit: number) => void;
     setOffset: (newOffset: number) => void;
     setPage: (newPage: number) => void;
     setLaunches: (newLaunches: Space[]) => void;
-    loading:boolean;
+    loading: boolean;
     setLoading: (loading: boolean) => void;
-    filterLaunchStatus:string;
-    setFilterLaunchStatus:(newFilterLaunchStatus:string) => void;
-    searchName:string;
-    setSearchName:(newSearchName:string) => void;
-    upcoming:string;
-    setUpcoming:(newUpcoming:string) => void;
+    filterLaunchStatus: string;
+    setFilterLaunchStatus: (newFilterLaunchStatus: string) => void;
+    searchName: string;
+    setSearchName: (newSearchName: string) => void;
+    upcoming: string;
+    setUpcoming: (newUpcoming: string) => void;
+    filterLaunchDate: string;
+    setFilterLaunchDate: (newFilterLaunchDate: string) => void;
 }
