@@ -5,9 +5,16 @@ import {SpaceXLaunchesContext} from "../../context/SpaceXLaunchesContext.tsx";
 import {SpaceXLaunchesContextType} from "../../Services/SpaceList.ts";
 
 const Filters = () => {
-    const {setFilterLaunchStatus, page, setPage} = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
+    const {
+        setFilterLaunchStatus,
+        setUpcoming,
+        page,
+        setPage,
+        setSearchName
+    } = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
     const [selectedOption, setSelectedOption] = useState('');
     const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
+    const [searchByName, setSearchByName] = useState<string>('');
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(event.target.value);
         if (event.target.value !== '') {
@@ -15,22 +22,51 @@ const Filters = () => {
             setPage(1)
             localStorage.setItem('page', page.toString());
             setShowUpcomingOnly(false)
+            // setSearchByName('')
+            // setSearchName('')
         } else {
             setFilterLaunchStatus('')
             setSelectedOption('');
         }
     };
 
+    // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     if (searchByName) {
+    //         console.log(searchByName)
+    //         setSearchName(searchByName)
+    //     } else {
+    //         setSearchName('')
+    //     }
+    // }
+
     useEffect(() => {
         if (showUpcomingOnly) {
-            setFilterLaunchStatus("/upcoming")
+            setUpcoming("/upcoming")
             setPage(1)
             localStorage.setItem('page', page.toString());
             setSelectedOption('')
+            setSearchName('')
+            setSearchByName('')
         } else {
-            setFilterLaunchStatus('')
+            setUpcoming('')
+            setSearchName('')
+            setSearchByName('')
         }
-    }, [showUpcomingOnly])
+    }, [page, setFilterLaunchStatus, setPage, setSearchName, setUpcoming, showUpcomingOnly])
+
+    useEffect(() => {
+        const delay = 3000;
+        const timer = setTimeout(() => {
+            setSearchName(searchByName)
+            setSearchByName(searchByName)
+        }, delay);
+
+        return () => {
+            clearTimeout(timer);
+        };
+
+    }, [searchByName, setSearchName]);
 
     return (
         <div className={`row ${styles.filterMainDiv}`}>
@@ -51,13 +87,26 @@ const Filters = () => {
             </div>
 
             <div className="col-md-5 col-lg-4">
-                <div className="input-group">
-                    <input type="text" className="form-control" placeholder="Search..." aria-label="Username"
-                           aria-describedby="basic-addon1"/>
-                    <span className="input-group-text bg-primary cursor-pointer" id="basic-addon1">
-                    <img src={searchIcon} alt="search Icon"/>
-                </span>
-                </div>
+                <form
+                    // onSubmit={handleSubmit}
+                >
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                            value={searchByName}
+                            onChange={(e) => setSearchByName(e.target.value)}
+                        />
+                        <button
+                            className={`${searchByName.length > 3 ? 'input-group-text bg-primary cursor-pointer' : 'input-group-text bg-primary pointer-event'}`}
+                            type="submit"
+                            // disabled={searchByName.length <= 3}
+                        >
+                            <img src={searchIcon} alt="search Icon"/>
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <div className="col-md-3 offset-md-1 offset-lg-2 offset-sm-0 col-12 my-3 my-md-0">

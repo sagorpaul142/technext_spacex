@@ -26,4 +26,8 @@ export interface SpaceXLaunchesContextType {
     setLoading: (loading: boolean) => void;
     filterLaunchStatus:string;
     setFilterLaunchStatus:(newFilterLaunchStatus:string) => void;
+    searchName:string;
+    setSearchName:(newSearchName:string) => void;
+    upcoming:string;
+    setUpcoming:(newUpcoming:string) => void;
 }
