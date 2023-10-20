@@ -7,6 +7,7 @@ import {SpaceXLaunchesContext} from "../context/SpaceXLaunchesContext.tsx";
 import CardSkeleton from "../components/skeleton/CardSkeleton.tsx";
 import {SpaceXLaunchesContextType} from "../Services/SpaceList.ts";
 import Pagination from "../components/Pagination/Pagination.tsx";
+import Nodata from "../components/NoData/Nodata.tsx";
 
 
 const Home = () => {
@@ -22,10 +23,10 @@ const Home = () => {
                 <Filters/>
 
                 {
-                    (loading && launches?.length === 0 )&& (
+                    (loading && launches?.length === 0) && (
                         <div className="row">
                             {
-                                Array.from(Array(limit)).map((_,index) => (
+                                Array.from(Array(limit)).map((_, index) => (
                                     <div className="col-lg-4 col-md-6" key={index}>
                                         <CardSkeleton/>
                                     </div>
@@ -37,11 +38,12 @@ const Home = () => {
 
                 <div className="row">
                     {
-                        launches.map((space, index) => (
-                            <div className="col-lg-4 col-md-6" key={index}>
-                                <SpaceCard space={space}/>
-                            </div>
-                        ))
+                        launches.length === 0 ? <Nodata/> :
+                            launches?.map((space, index) => (
+                                <div className="col-lg-4 col-md-6" key={index}>
+                                    <SpaceCard space={space}/>
+                                </div>
+                            ))
                     }
                 </div>
 

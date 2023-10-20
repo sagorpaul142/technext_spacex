@@ -14,6 +14,7 @@ const Filters = () => {
             setApiUrl(`?launch_success=${event.target.value}`)
             setPage(1)
             localStorage.setItem('page', page.toString());
+            setShowUpcomingOnly(false)
         } else {
             setApiUrl('')
             setSelectedOption('');
@@ -40,7 +41,7 @@ const Filters = () => {
                         className={`form-check-input ${styles.checkbox_border_color}`}
                         id="flexCheckChecked"
                         type="checkbox"
-                        value=""
+                        checked={showUpcomingOnly}
                         onChange={() => setShowUpcomingOnly(!showUpcomingOnly)}
                     />
                     <label className={`form-check-label ${styles.upcoming}`} htmlFor="flexCheckChecked">

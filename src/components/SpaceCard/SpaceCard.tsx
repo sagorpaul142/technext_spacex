@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./SpaceCard.module.scss"
 import moment from "moment";
 import {Space} from "../../Services/SpaceList.ts";
+import PlaceholderImage from "../../assets/placeholder-image.png"
 
 interface SpaceProps {
   space: Space;
@@ -10,7 +11,7 @@ interface SpaceProps {
 const SpaceCard: React.FC<SpaceProps> = ({space}) => {
     return (
         <div className={styles.card}>
-            <img loading="lazy" src={space?.links?.mission_patch} alt="SpaceImage" className="img-fluid"/>
+            <img loading="lazy" src={space?.links?.mission_patch || PlaceholderImage} alt="SpaceImage" className="img-fluid"/>
             <div className={styles.cardDetails}>
                 <div className={styles.lunch}>
                     <span>Launch Date:</span>
