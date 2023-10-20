@@ -5,30 +5,30 @@ import {SpaceXLaunchesContext} from "../../context/SpaceXLaunchesContext.tsx";
 import {SpaceXLaunchesContextType} from "../../Services/SpaceList.ts";
 
 const Filters = () => {
-    const {setApiUrl, page, setPage} = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
+    const {setFilterLaunchStatus, page, setPage} = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
     const [selectedOption, setSelectedOption] = useState('');
     const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(event.target.value);
         if (event.target.value !== '') {
-            setApiUrl(`?launch_success=${event.target.value}`)
+            setFilterLaunchStatus(`?launch_success=${event.target.value}`)
             setPage(1)
             localStorage.setItem('page', page.toString());
             setShowUpcomingOnly(false)
         } else {
-            setApiUrl('')
+            setFilterLaunchStatus('')
             setSelectedOption('');
         }
     };
 
     useEffect(() => {
         if (showUpcomingOnly) {
-            setApiUrl("/upcoming")
+            setFilterLaunchStatus("/upcoming")
             setPage(1)
             localStorage.setItem('page', page.toString());
             setSelectedOption('')
         } else {
-            setApiUrl('')
+            setFilterLaunchStatus('')
         }
     }, [showUpcomingOnly])
 

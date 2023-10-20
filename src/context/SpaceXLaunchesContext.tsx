@@ -11,7 +11,7 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
     const [offset, setOffset] = useState<number>(page * limit - 9);
     const [total, setTotal] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
-    const [apiUrl, setApiUrl] = useState<string>('');
+    const [filterLaunchStatus, setFilterLaunchStatus] = useState<string>('');
 
     const getAllSpaces = () => {
         setLoading(true)
@@ -20,10 +20,10 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
         const queryString = `limit=${limit}&offset=${newOffset}`;
         let url = `https://api.spacexdata.com/v3/launches`;
 
-        if (apiUrl !== '' && apiUrl !== '/upcoming') {
-            url += `${apiUrl}&${queryString}`
-        } else if (apiUrl !== '') {
-            url += `${apiUrl}`
+        if (filterLaunchStatus !== '' && filterLaunchStatus !== '/upcoming') {
+            url += `${filterLaunchStatus}&${queryString}`
+        } else if (filterLaunchStatus !== '') {
+            url += `${filterLaunchStatus}`
             setPage(1)
             localStorage.setItem('page', page.toString());
         } else {
@@ -44,7 +44,7 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
 
     useEffect(() => {
         getAllSpaces()
-    }, [page, offset, apiUrl])
+    }, [page, offset, filterLaunchStatus])
 
     useEffect(() => {
         if (!localStorage.getItem('page')) {
@@ -66,8 +66,8 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                 offset,
                 page,
                 setPage,
-                apiUrl,
-                setApiUrl
+                filterLaunchStatus,
+                setFilterLaunchStatus
             }}>
             {children}
         </SpaceXLaunchesContext.Provider>
