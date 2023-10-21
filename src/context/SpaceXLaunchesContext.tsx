@@ -59,7 +59,6 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                             const launchDate = new Date(launch.launch_date_utc);
                             return launchDate >= startDate && launchDate <= now;
                         });
-                        console.log(filteredLaunches)
                         setLaunches(filteredLaunches)
                         setTotal(filteredLaunches.length)
                     } else if (filterLaunchDate === 'last_month') {
@@ -70,7 +69,6 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                             const launchDate = new Date(launch.launch_date_utc);
                             return launchDate >= startDate && launchDate <= now;
                         });
-                        console.log(filteredLaunches)
                         setLaunches(filteredLaunches)
                         setTotal(filteredLaunches.length)
                     } else if (filterLaunchDate === 'last_year') {
@@ -81,7 +79,6 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                             const launchDate = new Date(launch.launch_date_utc);
                             return launchDate >= startDate && launchDate <= now;
                         });
-                        console.log(filteredLaunches)
                         setLaunches(filteredLaunches)
                         setTotal(filteredLaunches.length)
                     } else {
