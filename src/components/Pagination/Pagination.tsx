@@ -37,13 +37,15 @@ const Pagination = () => {
                     Array.from(Array(Math.ceil(total / limit) || 0)).map((_, index) => (
                         <li className="page-item" key={index}>
                             <a
-                                className={`${index + 1 === page ? 'active page-link cursor-pointer' : 'page-link cursor-pointer'}`}
+                                className={`${index + 1 === page ? 'active page-link pointer-event' : 'page-link cursor-pointer'}`}
                                 href={void 0}
                                 onClick={() => {
-                                    localStorage.setItem('page', String(index + 1));
-                                    setPage(index + 1)
-                                    setOffset(((index + 1) * limit) - 9)
-                                    goToTop()
+                                    if (index + 1 !== page) {
+                                        localStorage.setItem('page', String(index + 1));
+                                        setPage(index + 1)
+                                        setOffset(((index + 1) * limit) - 9)
+                                        goToTop()
+                                    }
                                 }}
                             >
                                 {index + 1}

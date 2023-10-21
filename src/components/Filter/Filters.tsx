@@ -26,23 +26,11 @@ const Filters = () => {
             setShowUpcomingOnly(false)
             setFilter('')
             setFilterLaunchDate('')
-            // setSearchByName('')
-            // setSearchName('')
         } else {
             setFilterLaunchStatus('')
             setSelectedOption('');
         }
     };
-
-    // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     if (searchByName) {
-    //         console.log(searchByName)
-    //         setSearchName(searchByName)
-    //     } else {
-    //         setSearchName('')
-    //     }
-    // }
 
     useEffect(() => {
         if (showUpcomingOnly) {
@@ -93,9 +81,7 @@ const Filters = () => {
             </div>
 
             <div className="col-md-5 col-lg-4">
-                <form
-                    // onSubmit={handleSubmit}
-                >
+                <form>
                     <div className="input-group">
                         <input
                             type="text"
