@@ -22,7 +22,7 @@ const Filters = () => {
         if (event.target.value !== '') {
             setFilterLaunchStatus(`?launch_success=${event.target.value}`)
             setPage(1)
-            localStorage.setItem('page', page.toString());
+            localStorage.setItem('page', String(1));
             setShowUpcomingOnly(false)
             setFilter('')
             setFilterLaunchDate('')
@@ -48,7 +48,7 @@ const Filters = () => {
         if (showUpcomingOnly) {
             setUpcoming("/upcoming")
             setPage(1)
-            localStorage.setItem('page', page.toString());
+            localStorage.setItem('page', String(1));
             setSelectedOption('')
             setSearchName('')
             setSearchByName('')

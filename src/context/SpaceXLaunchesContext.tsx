@@ -8,7 +8,7 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
     const [launches, setLaunches] = useState<Space[]>([]);
     const [limit, setLimit] = useState<number>(9);
     const [page, setPage] = useState<number>(parseInt(localStorage.getItem('page') || '1') || 1);
-    const [offset, setOffset] = useState<number>(page * limit - 9);
+    const [offset, setOffset] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [filterLaunchStatus, setFilterLaunchStatus] = useState<string>('');
@@ -31,8 +31,6 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                     url += `${upcoming}?${name}&${queryString}`
                 } else if (filterLaunchStatus !== '') {
                     url += `${filterLaunchStatus}&${name}&${queryString}`
-                    setPage(1)
-                    localStorage.setItem('page', page.toString());
                 } else {
                     url += `?${name}&${queryString}`
                 }
@@ -42,8 +40,6 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                     url += `${upcoming}?${queryString}`
                 } else if (filterLaunchStatus !== '') {
                     url += `${filterLaunchStatus}&${queryString}`
-                    setPage(1)
-                    localStorage.setItem('page', page.toString());
                 } else {
                     url += `?${queryString}`
                 }
