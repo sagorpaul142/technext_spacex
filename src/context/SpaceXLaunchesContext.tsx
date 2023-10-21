@@ -20,30 +20,22 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
     useEffect(() => {
         const getAllSpaces = () => {
             setLoading(true)
-
             const newOffset = (page - 1) * limit;
             const queryString = `limit=${limit}&offset=${newOffset}`;
             let url = `https://api.spacexdata.com/v3/launches`;
 
-            if (searchName !== '') {
-                const name = `rocket_name=${searchName}`;
-                if (upcoming !== '') {
-                    url += `${upcoming}?${name}&${queryString}`
-                } else if (filterLaunchStatus !== '') {
-                    url += `${filterLaunchStatus}&${name}&${queryString}`
-                } else {
-                    url += `?${name}&${queryString}`
-                }
+            const queryParams = [];
+            queryParams.push(queryString);
 
-            } else {
-                if (upcoming !== '') {
-                    url += `${upcoming}?${queryString}`
-                } else if (filterLaunchStatus !== '') {
-                    url += `${filterLaunchStatus}&${queryString}`
-                } else {
-                    url += `?${queryString}`
-                }
+            if (searchName) {
+                queryParams.push(`rocket_name=${searchName}`);
             }
+
+            url += upcoming
+                ? `${upcoming}?${queryParams.join('&')}`
+                : filterLaunchStatus
+                    ? `${filterLaunchStatus}&${queryParams.join('&')}`
+                    : `?${queryParams.join('&')}`;
 
             axios.get<Space[]>(url)
                 .then(res => {
@@ -51,36 +43,15 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
                     const now = new Date();
                     const startDate = new Date();
 
-                    if (filterLaunchDate === 'last_week') {
-                        startDate.setDate(now.getDate() - 7);
-                        let filteredLaunches: Space[];
-                        // eslint-disable-next-line prefer-const
-                        filteredLaunches = launches.filter((launch) => {
+                    if (filterLaunchDate === 'last_week' || filterLaunchDate === 'last_month' || filterLaunchDate === 'last_year') {
+                        const timeFrame = filterLaunchDate === 'last_week' ? 7 : (filterLaunchDate === 'last_month' ? 30 : 365);
+                        startDate.setDate(now.getDate() - timeFrame);
+                        const filteredLaunches = launches.filter((launch) => {
                             const launchDate = new Date(launch.launch_date_utc);
                             return launchDate >= startDate && launchDate <= now;
                         });
-                        setLaunches(filteredLaunches)
-                        setTotal(filteredLaunches.length)
-                    } else if (filterLaunchDate === 'last_month') {
-                        startDate.setMonth(now.getMonth() - 1);
-                        let filteredLaunches: Space[];
-                        // eslint-disable-next-line prefer-const
-                        filteredLaunches = launches.filter((launch) => {
-                            const launchDate = new Date(launch.launch_date_utc);
-                            return launchDate >= startDate && launchDate <= now;
-                        });
-                        setLaunches(filteredLaunches)
-                        setTotal(filteredLaunches.length)
-                    } else if (filterLaunchDate === 'last_year') {
-                        startDate.setFullYear(now.getFullYear() - 1);
-                        let filteredLaunches: Space[];
-                        // eslint-disable-next-line prefer-const
-                        filteredLaunches = launches.filter((launch) => {
-                            const launchDate = new Date(launch.launch_date_utc);
-                            return launchDate >= startDate && launchDate <= now;
-                        });
-                        setLaunches(filteredLaunches)
-                        setTotal(filteredLaunches.length)
+                        setLaunches(filteredLaunches);
+                        setTotal(filteredLaunches.length);
                     } else {
                         setLaunches(res?.data)
                         setTotal(parseInt(res.headers['spacex-api-count']))
@@ -94,7 +65,7 @@ export function SpaceXLaunchesProvider({children}: { children: ReactNode }) {
         }
 
         getAllSpaces()
-    }, [page, offset, filterLaunchStatus, searchName, limit, upcoming, setUpcoming, filterLaunchDate, setFilterLaunchDate])
+    }, [page, offset, filterLaunchStatus, searchName, limit, upcoming, filterLaunchDate])
 
     useEffect(() => {
         if (!localStorage.getItem('page')) {

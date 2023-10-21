@@ -23,7 +23,7 @@ const Home = () => {
                 <Filters/>
 
                 {
-                    (loading && launches?.length === 0) && (
+                    loading && (
                         <div className="row">
                             {
                                 Array.from(Array(limit)).map((_, index) => (

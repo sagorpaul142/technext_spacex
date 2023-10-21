@@ -15,7 +15,7 @@ const Filters = () => {
     } = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
     const [selectedOption, setSelectedOption] = useState('');
     const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
-    const [searchByName, setSearchByName] = useState<string>('');
+    const [searchText, setSearchText] = useState<string>('');
     const [filter, setFilter] = useState<string>('');
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(event.target.value);
@@ -38,30 +38,23 @@ const Filters = () => {
             setPage(1)
             localStorage.setItem('page', String(1));
             setSelectedOption('')
-            setSearchName('')
-            setSearchByName('')
             setFilter('')
             setFilterLaunchDate('')
+            setFilterLaunchStatus('')
         } else {
             setUpcoming('')
-            setSearchName('')
-            setSearchByName('')
+            setFilterLaunchDate('')
+            setFilter('')
         }
-    }, [page, setFilterLaunchStatus, setPage, setSearchName, setUpcoming, showUpcomingOnly])
-
-    useEffect(() => {
-        const delay = 3000;
-        const timer = setTimeout(() => {
-            setSearchName(searchByName)
-            setSearchByName(searchByName)
-        }, delay);
-
-        return () => {
-            clearTimeout(timer);
-        };
-
-    }, [searchByName, setSearchName]);
-
+    }, [page, showUpcomingOnly])
+    
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSearchName(searchText)
+        setPage(1)
+        localStorage.setItem('page', String(1));
+    }
+    
     return (
         <div className={`row ${styles.filterMainDiv}`}>
 
@@ -81,19 +74,18 @@ const Filters = () => {
             </div>
 
             <div className="col-md-5 col-lg-4">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <input
                             type="text"
                             className="form-control"
                             placeholder="Search..."
-                            value={searchByName}
-                            onChange={(e) => setSearchByName(e.target.value)}
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
                         />
                         <button
-                            className={`${searchByName.length > 3 ? 'input-group-text bg-primary cursor-pointer' : 'input-group-text bg-primary pointer-event'}`}
+                            className={'input-group-text bg-primary cursor-pointer'}
                             type="submit"
-                            // disabled={searchByName.length <= 3}
                         >
                             <img src={searchIcon} alt="search Icon"/>
                         </button>
