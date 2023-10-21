@@ -14,7 +14,7 @@ const Pagination = () => {
 
     return (
         <nav className="mt-4 d-flex justify-content-center">
-            <ul className="pagination">
+            <ul className="pagination flex-wrap">
                 {
                     total > 0 &&
                     <li className={`${page > 1 ? 'page-item cursor-pointer' : 'page-item pointer-event'}`}>
