@@ -11,6 +11,7 @@ const Filters = () => {
         page,
         setPage,
         setSearchName,
+        searchName,
         setFilterLaunchDate
     } = useContext(SpaceXLaunchesContext) as SpaceXLaunchesContextType
     const [selectedOption, setSelectedOption] = useState('');
@@ -32,6 +33,22 @@ const Filters = () => {
         }
     };
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSearchName(searchText)
+        setPage(1)
+        localStorage.setItem('page', String(1));
+    }
+
+    const handleClearSearch = () => {
+        setSearchText('');
+        setSearchName('')
+        if (page > 1 && searchName) {
+            setPage(1);
+            localStorage.setItem('page', '1');
+        }
+    };
+
     useEffect(() => {
         if (showUpcomingOnly) {
             setUpcoming("/upcoming")
@@ -47,14 +64,7 @@ const Filters = () => {
             setFilter('')
         }
     }, [page, showUpcomingOnly])
-    
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setSearchName(searchText)
-        setPage(1)
-        localStorage.setItem('page', String(1));
-    }
-    
+
     return (
         <div className={`row ${styles.filterMainDiv}`}>
 
@@ -78,7 +88,7 @@ const Filters = () => {
                     <div className="input-group">
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control position-relative"
                             placeholder="Search..."
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
@@ -89,6 +99,17 @@ const Filters = () => {
                         >
                             <img src={searchIcon} alt="search Icon"/>
                         </button>
+                        {
+                            searchText && (
+                                <div
+                                    className={`${styles.clear_icon} position-absolute cursor-pointer`}
+                                    onClick={handleClearSearch}
+                                >
+                                    &times;
+                                </div>
+                            )
+                        }
+
                     </div>
                 </form>
             </div>

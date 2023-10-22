@@ -11,11 +11,27 @@
     line-height: 1.5rem;
   }
 
-  .checkbox_border_color{
+  .checkbox_border_color {
     border-color: $checkbox_border_color;
   }
 
   .filter_select {
     height: 38px;
+  }
+
+  .clear_icon {
+    right: 3rem;
+    top: 4px;
+    z-index: 99999;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
+    color: red;
+    text-align: center;
+    background-color: #cbcfd2;
+    font-size: 40px;
+    line-height: 25px;
   }
 }
